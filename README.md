@@ -9,3 +9,7 @@
 - MyBatis
 - Thymeleaf
 - H2 Database
+
+## 폴더
+- crud-test : 수업 파일
+- hi-test : 참고 파일
