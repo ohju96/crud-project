@@ -2,43 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- JAVA와 연결할 Mapper 파일 설정 -->
-<mapper namespace="com.example.crudtest.mapper.UserMapper">
+<mapper namespace="com.example.hitest.persistance.mapper.UserMapper">
 
 <!--    User 등록하기-->
-    <insert id="insertUser" parameterType="com.example.crudtest.dto.UserDto">
-        INSERT INTO USER(id, pw)
-        VALUES (#{userId}, #{userPw})
+    <insert id="insertUser" parameterType="com.example.hitest.dto.UserDto">
+        INSERT INTO USER (id,pw)
+        VALUES (#{userId},#{userPw})
     </insert>
 
-<!--    ID 중복 체크-->
-    <select id="checkUserId" parameterType="com.example.crudtest.dto.UserDto" resultType="int">
+<!--     ID 중복 체크하기-->
+    <select id="checkUserId" parameterType="com.example.hitest.dto.UserDto" resultType="int">
         SELECT COUNT(*)
         FROM USER
         WHERE id = #{userId}
     </select>
 
 <!--    ID 조회하기-->
-    <select id="readUser" resultType="com.example.crudtest.dto.UserDto">
+    <select id="readUser" resultType="com.example.hitest.dto.UserDto">
         SELECT id AS userId
         FROM USER
     </select>
 
-<!--    UserId, Pw 조회하기-->
-    <select id="readAllUser" resultType="com.example.crudtest.dto.UserDto">
+<!--    User ID, Pw 조회하기-->
+    <select id="readAllUser" resultType="com.example.hitest.dto.UserDto">
         SELECT id AS userId,
-               pw AS uesrPw
+               pw AS userPw
         FROM USER
     </select>
 
 <!--    User 삭제 : 아이디 기준-->
-    <delete id="deleteUser" parameterType="com.example.crudtest.dto.UserDto">
+    <delete id="deleteUser" parameterType="com.example.hitest.dto.UserDto">
         DELETE
         FROM USER
         WHERE id = #{userId}
     </delete>
 
 <!--    비밀번호 변경-->
-    <update id="updateUser" parameterType="com.example.crudtest.dto.UserDto">
+    <update id="updateUser" parameterType="com.example.hitest.dto.UserDto">
         UPDATE USER
         SET pw = #{userPw}
         WHERE id = #{userId}

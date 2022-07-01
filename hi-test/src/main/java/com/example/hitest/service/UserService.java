@@ -1,8 +1,8 @@
-package com.example.crudtest.service;
+package com.example.hitest.service;
 
-import com.example.crudtest.dto.RedirectDto;
-import com.example.crudtest.dto.UpdateUserDto;
-import com.example.crudtest.dto.UserDto;
+import com.example.hitest.dto.RedirectDto;
+import com.example.hitest.dto.UpdateUserDto;
+import com.example.hitest.dto.UserDto;
 
 import java.util.List;
 
@@ -20,6 +20,5 @@ public interface UserService {
     // 유저 비밀번호 변경
     RedirectDto updateUser(UpdateUserDto updateUserDto) throws Exception;
 
-    // 유저 삭제
     RedirectDto deleteUser(String userId) throws Exception;
 }

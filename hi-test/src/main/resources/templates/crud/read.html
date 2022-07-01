@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <meta charset="UTF-8">
     <title>Title</title>
 
@@ -54,18 +53,18 @@
 </head>
 <body>
 
-    <div class="divTable minimalistBlack">
-        <div class="divTableHeading">
-            <div class="divTableRow">
-                <div class="divTableHead">아이디</div>
-            </div>
-        </div>
-        <div class="divTableBody">
-            <div class="divTableRow" th:each="m: ${userDtoList}">
-                <div class="divTableCell" th:text="${m.userId}"></div>
-            </div>
+<div class="divTable minimalistBlack">
+    <div class="divTableHeading">
+        <div class="divTableRow">
+            <div class="divTableHead">아이디</div>
         </div>
     </div>
+    <div class="divTableBody">
+        <div class="divTableRow" th:each="m: ${userDtoList}">
+            <div class="divTableCell" th:text="${m.userId}"></div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

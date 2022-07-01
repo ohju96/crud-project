@@ -1,4 +1,4 @@
-package com.example.crudtest.dto;
+package com.example.hitest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

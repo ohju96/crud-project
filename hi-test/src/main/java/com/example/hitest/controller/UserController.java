@@ -1,19 +1,14 @@
-package com.example.crudtest.controller;
+package com.example.hitest.controller;
 
-import com.example.crudtest.dto.RedirectDto;
-import com.example.crudtest.dto.UpdateUserDto;
-import com.example.crudtest.dto.UserDto;
-import com.example.crudtest.service.UserService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.example.hitest.dto.RedirectDto;
+import com.example.hitest.dto.UserDto;
+import com.example.hitest.dto.UpdateUserDto;
+import com.example.hitest.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -29,13 +24,13 @@ public class UserController {
     // create(insert) : 유저 등록하기 페이지
     @GetMapping("/create")
     public String insertUserPage() {
-        log.info("### insetUserPage start");
         return "/crud/create";
     }
 
+    // create(insert) : 유저 등록하기 로직
     @PostMapping("/create")
     public String insertUser(HttpServletRequest request, Model model) throws Exception {
-        log.info("### insertUser start");
+        log.info("### insertUser.Controller start");
 
         UserDto userDto = new UserDto();
         userDto.setUserId(request.getParameter("userId"));
@@ -43,54 +38,46 @@ public class UserController {
         log.info("### userDto : {}", userDto);
 
         RedirectDto redirectDto = userService.insertUser(userDto);
-        log.info("### redirectDto : {}", redirectDto);
 
         model.addAttribute("msg", redirectDto.getMsg());
         model.addAttribute("url", redirectDto.getUrl());
 
-        log.info("### insertUser end");
+        log.info("### insertUser.Controller end");
         return "/redirect";
     }
 
+    // read(select) : 유저 조회하기 페이지
     @GetMapping("/read")
-    public String readUserPage(Model model) {
-        log.info("### readUserPage start");
+    public String readUserPage(Model model){
+        log.info("### readUserPage Start");
 
         try {
             List<UserDto> userDtoList = userService.readUser();
-            log.info("### userDtoList : {}", userDtoList);
-
-            // 유저가 없을 때 index 조회 시 IndexOutOfBoundsException 뜨는 것 주의 !
-            log.info("### userDtoList : {}", userDtoList.get(0));
+            log.info("userDtoList : {}", userDtoList);
+            log.info("userDtoList.index : {}", userDtoList.get(0));
 
             model.addAttribute("userDtoList", userDtoList);
-
-            log.info("### readUserPage end 1");
             return "/crud/read";
 
         } catch (IndexOutOfBoundsException e) {
-            model.addAttribute("msg", "등록된 유저가 없습니다. 먼저 유저를 등록해주세요.");
+            model.addAttribute("msg", "등록된 유저가 없습니다. ");
             model.addAttribute("url", "/crud/create");
-
-            log.info("### readUserPage end 2");
             return "/redirect";
 
         } catch (Exception e) {
             model.addAttribute("msg", "오류가 발생했습니다. 다시 시도해주세요");
             model.addAttribute("url", "/crud/read");
-
-            log.info("### readUserPage end 3");
             return "/redirect";
         }
     }
 
+    // update(update) : 유저 수정하기 페이지
     @GetMapping("/update")
     public String updateUserPage(Model model) throws Exception {
         log.info("### updateUserPage Start");
 
         // 모둔 유저 정보 조회
         List<UserDto> userDtoList = userService.readAllUser();
-
         UpdateUserDto updateUserDto = new UpdateUserDto();
         updateUserDto.setUpdateUserList(userDtoList);
 
@@ -101,19 +88,23 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute UpdateUserDto updateUserDto, Model model) throws Exception {
-        log.info("### updateUser start");
+    public String updateUser(@ModelAttribute UpdateUserDto userDtoList, Model model) throws Exception {
+        log.info("### updateUser Start");
+        log.info("### userDtoList : {}", userDtoList);
+        log.info("### userDtoList.index : {}", userDtoList.getUpdateUserList().get(0).getUserId());
+        log.info("### userDtoList.index : {}", userDtoList.getUpdateUserList().get(0).getUserPw());
 
-        RedirectDto redirectDto = userService.updateUser(updateUserDto);
+        RedirectDto redirectDto = userService.updateUser(userDtoList);
         log.info("### redirectDto : {}", redirectDto);
 
         model.addAttribute("msg", redirectDto.getMsg());
         model.addAttribute("url", redirectDto.getUrl());
 
-        log.info("### updateUser end");
+        log.info("### updateUser End");
         return "/redirect";
     }
 
+    // delete(delete) : 유저 삭제하기 페이지
     @GetMapping("/delete")
     public String deleteUserPage() {
         log.info("### deleteUserPage pass");
