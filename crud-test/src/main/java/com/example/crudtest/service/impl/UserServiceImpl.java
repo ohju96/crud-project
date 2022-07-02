@@ -86,6 +86,13 @@ public class UserServiceImpl implements UserService {
 
         // 받아온 updateUserDto 객체를 List<UserDto>에 옮겨준다.
         List<UserDto> updateUserList = updateUserDto.getUpdateUserList();
+
+        if (updateUserList == null) {
+            redirectDto.setMsg("등록된 유저가 없습니다. 유저 등록 후 이용해주세요.");
+            redirectDto.setUrl("/crud/create");
+            return redirectDto;
+        }
+
         log.info("### updateUserList : {}", updateUserList);
 
         // 향상된 for문
@@ -122,8 +129,8 @@ public class UserServiceImpl implements UserService {
         // 1 = 존재, 그 외 오류
         // 아이디가 존재하지 않거나 다수 존재하면 ..
         if (userMapper.checkUserId(userDto) != 1) {
-            redirectDto.setMsg("존재하지 않는 아이디입니다. 존재하는 아이디를 입력해주세요.");
-            redirectDto.setUrl("/crud/delete");
+            redirectDto.setMsg("존재하지 않는 아이디입니다. 아이디를 확인 후 이용해주세요.");
+            redirectDto.setUrl("/crud/read");
             return redirectDto;
         }
 

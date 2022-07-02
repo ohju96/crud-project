@@ -26,7 +26,7 @@
 <!--    UserId, Pw 조회하기-->
     <select id="readAllUser" resultType="com.example.crudtest.dto.UserDto">
         SELECT id AS userId,
-               pw AS uesrPw
+               pw AS userPw
         FROM USER
     </select>
 
